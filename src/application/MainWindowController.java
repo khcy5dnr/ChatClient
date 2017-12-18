@@ -34,6 +34,7 @@ public class MainWindowController extends Main implements Initializable{
 	PrintWriter out = null;
 	String answer = null;
 	
+	private boolean canPrintFlag = true;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -48,7 +49,10 @@ public class MainWindowController extends Main implements Initializable{
 			e.printStackTrace();
 		}	
 		
+		messageBox.setEditable(false);
+		
 		sendButton.setOnAction(value -> {
+			canPrintFlag = true;
 			out.println(sendMessageBox.getText());
 			try {
 				answer = input.readLine();
@@ -58,26 +62,28 @@ public class MainWindowController extends Main implements Initializable{
 			
 		});
 		
-		new Timer().schedule(
-			    new TimerTask() {
+		new Timer().schedule(new TimerTask() {
 
-			        @Override
-			        public void run() {
-			        	try {
-			        		if(input.ready()){
-			        			answer = input.readLine();
-		
-			        		}
-							
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						
-						if(answer != null){
-							messageBox.appendText(answer+".\n\n");
-						}
-			        }
-			    }, 0, 3000);
+        @Override
+        public void run() {
+        	try {
+        		if(input.ready()){
+        			answer = input.readLine();
+        			canPrintFlag = true;
+        			
+        		}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			if(answer != null && canPrintFlag){
+				System.out.println("test");
+				messageBox.appendText(answer+"\n\n");
+				canPrintFlag = false;
+			}
+        }
+    }, 0, 1000);
 		
 	}
 	
