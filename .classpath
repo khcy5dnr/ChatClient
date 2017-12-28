@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="testfx-core-4.0.4-alpha.jar"/>
 	<classpathentry kind="lib" path="testfx-junit-4.0.4-alpha.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/chatServer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
