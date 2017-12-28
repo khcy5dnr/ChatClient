@@ -7,8 +7,15 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
    <children>
-      <TextArea fx:id="messageBox" layoutX="47.0" layoutY="25.0" prefHeight="200.0" prefWidth="506.0" />
-      <Button fx:id="sendButton" layoutX="277.0" layoutY="258.0" mnemonicParsing="false" text="SEND" />
-      <TextField fx:id="sendMessageBox" layoutX="47.0" layoutY="258.0" prefHeight="25.0" prefWidth="221.0" />
+      <TextArea fx:id="messageBox" layoutX="47.0" layoutY="62.0" prefHeight="200.0" prefWidth="506.0" />
+      <Button fx:id="sendButton" layoutX="47.0" layoutY="354.0" mnemonicParsing="false" text="SEND" />
+      <TextField fx:id="sendMessageBox" layoutX="47.0" layoutY="301.0" prefHeight="25.0" prefWidth="506.0" promptText="MESSAGE" />
+      <Button fx:id="broadcastMesg" layoutX="171.0" layoutY="354.0" mnemonicParsing="false" text="BROADCAST" />
+      <TextField fx:id="userName" layoutX="47.0" layoutY="24.0" promptText="USER NAME" />
+      <Button fx:id="statusButton" layoutX="321.0" layoutY="354.0" mnemonicParsing="false" text="STATUS" />
+      <Button fx:id="getUserList" layoutX="470.0" layoutY="354.0" mnemonicParsing="false" text="LIST USER(S)" />
+      <Button fx:id="quitButton" layoutX="532.0" layoutY="24.0" mnemonicParsing="false" text="QUIT" />
+      <Button fx:id="idenButton" layoutX="213.0" layoutY="24.0" mnemonicParsing="false" text="LOGIN" />
+      <TextField fx:id="recipientName" layoutX="47.0" layoutY="268.0" promptText="RECIPIENT" />
    </children>
 </Pane>

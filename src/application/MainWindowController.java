@@ -7,11 +7,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.concurrent.Task;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,7 +26,28 @@ public class MainWindowController extends Main implements Initializable{
 	private TextField sendMessageBox = new TextField();
 	
 	@FXML
+	private TextField recipientName = new TextField();
+	
+	@FXML
+	private TextField userName = new TextField();
+	
+	@FXML
 	private Button sendButton = new Button();
+	
+	@FXML
+	private Button broadcastMesg = new Button();
+	
+	@FXML
+	private Button statusButton = new Button();
+	
+	@FXML
+	private Button getUserList = new Button();
+	
+	@FXML
+	private Button quitButton = new Button();
+	
+	@FXML
+	private Button idenButton = new Button();
 	
 	Socket myClient = null;
 	BufferedReader input = null;
@@ -43,19 +63,64 @@ public class MainWindowController extends Main implements Initializable{
 			myClient = new Socket("DURAI23", 9000);
 			input = new BufferedReader(new InputStreamReader(myClient.getInputStream()));
 			out = new PrintWriter(myClient.getOutputStream(), true);
-			answer = input.readLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		
+		//disable other fields until user logs in
 		messageBox.setEditable(false);
+		
+		recipientName.setDisable(true);
+		sendButton.setDisable(true);
+		sendMessageBox.setDisable(true);
+		
 		
 		sendButton.setOnAction(value -> {
 			canPrintFlag = true;
-			out.println(sendMessageBox.getText());
+			out.println("MESG "+recipientName.getText()+" "+sendMessageBox.getText());
+			
+		});
+		
+		idenButton.setOnAction(value -> {
+			canPrintFlag = true;
+			out.println("IDEN "+userName.getText());
+			
+			idenButton.setDisable(true);
+			userName.setDisable(true);			
+			
+			recipientName.setDisable(false);
+			sendButton.setDisable(false);
+			sendMessageBox.setDisable(false);
+			
+		});
+		
+		broadcastMesg.setOnAction(value -> {
+			canPrintFlag = true;
+			out.println("HAIL "+sendMessageBox.getText());			
+		});
+		
+		statusButton.setOnAction(value -> {
+			canPrintFlag = true;
+			out.println("STAT");			
+		});
+		
+		getUserList.setOnAction(value -> {
+			canPrintFlag = true;
+			out.println("LIST");			
+		});
+		
+		quitButton.setOnAction(value -> {
+			canPrintFlag = true;
+			out.println("QUIT");			
+			
+			idenButton.setDisable(false);
+			userName.setDisable(false);
+			
 			try {
-				answer = input.readLine();
+				myClient.close();				
+				System.exit(0);
+				Platform.exit();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -69,21 +134,23 @@ public class MainWindowController extends Main implements Initializable{
         	try {
         		if(input.ready()){
         			answer = input.readLine();
-        			canPrintFlag = true;
-        			
+        			canPrintFlag = true; 
         		}
+				       		
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
 			if(answer != null && canPrintFlag){
-				System.out.println("test");
-				messageBox.appendText(answer+"\n\n");
-				canPrintFlag = false;
+				if(!answer.equals("")){
+					messageBox.appendText(answer+"\n\n");
+					canPrintFlag = false;
+				}
+				
 			}
         }
-    }, 0, 1000);
+		}, 0, 1000);
 		
 	}
 	
